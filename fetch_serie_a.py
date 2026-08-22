@@ -353,21 +353,10 @@ def build_dashboard():
     <style>
         body {{ font-family: 'Plus Jakarta Sans', sans-serif; }}
         .font-mono {{ font-family: 'JetBrains Mono', monospace; }}
-        @keyframes ticker {{
-            0% {{ transform: translate3d(0, 0, 0); }}
-            100% {{ transform: translate3d(-50%, 0, 0); }}
-        }}
         .ticker-track {{
             display: inline-flex;
             width: max-content;
-            animation: ticker 65s linear infinite;
-            backface-visibility: hidden;
-            perspective: 1000px;
-            transform: translate3d(0, 0, 0);
             will-change: transform;
-        }}
-        .ticker-container:hover .ticker-track {{
-            animation-play-state: paused !important;
         }}
     </style>
 </head>
@@ -550,18 +539,34 @@ def build_dashboard():
                 }}
             }});
         }});
-        // 3. Prevent Background Tab Ticker Desync
-        document.addEventListener('visibilitychange', function() {{
+        // Continuous, tab-resilient JS Marquee Engine
+        (function() {{
             const track = document.querySelector('.ticker-track');
-            if (!track) return;
-            
-            if (document.hidden) {{
-                track.style.animationPlayState = 'paused';
-            }} else {{
-                // Force a micro reflow so the browser re-syncs cleanly
-                track.style.animationPlayState = 'running';
+            const container = document.querySelector('.ticker-container');
+            if (!track || !container) return;
+
+            let pos = 0;
+            let isHovered = false;
+            const speed = 0.65; // Adjust speed: lower is slower, higher is faster
+
+            container.addEventListener('mouseenter', function() {{ isHovered = true; }});
+            container.addEventListener('mouseleave', function() {{ isHovered = false; }});
+
+            function step() {{
+                if (!isHovered) {{
+                    pos -= speed;
+                    // Reset seamlessly at the exact halfway mark (second duplicate copy begins)
+                    const halfWidth = track.scrollWidth / 2;
+                    if (Math.abs(pos) >= halfWidth) {{
+                        pos = 0;
+                    }}
+                    track.style.transform = `translate3d(${{pos}}px, 0, 0)`;
+                }}
+                requestAnimationFrame(step);
             }}
-        }});
+
+            requestAnimationFrame(step);
+        }})();
     </script>
 </body>
 </html>"""

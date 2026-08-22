@@ -15,21 +15,10 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
-        }
         .ticker-track {
             display: inline-flex;
             width: max-content;
-            animation: ticker 65s linear infinite;
-            backface-visibility: hidden;
-            perspective: 1000px;
-            transform: translate3d(0, 0, 0);
             will-change: transform;
-        }
-        .ticker-container:hover .ticker-track {
-            animation-play-state: paused !important;
         }
     </style>
 </head>
@@ -193,7 +182,7 @@
             <div class="flex items-center gap-3">
                 <div class="text-xs font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 px-3.5 py-1.5 rounded-lg flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 20:08 UTC</span></span>
+                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 20:37 UTC</span></span>
                 </div>
             </div>
         </header>
@@ -278,7 +267,7 @@
                         <img src="https://crests.football-data.org/113.png" class="w-5 h-5 object-contain" onerror="this.style.display='none'"/>
                         <span class="font-medium text-sm text-zinc-200">Napoli</span>
                     </div>
-                    <span class="font-mono font-bold text-sm text-zinc-100">0</span>
+                    <span class="font-mono font-bold text-sm text-zinc-100">2</span>
                 </div>
             </div>
         </div>
@@ -303,7 +292,7 @@
                         <img src="https://crests.football-data.org/104.png" class="w-5 h-5 object-contain" onerror="this.style.display='none'"/>
                         <span class="font-medium text-sm text-zinc-200">Cagliari</span>
                     </div>
-                    <span class="font-mono font-bold text-sm text-zinc-100">0</span>
+                    <span class="font-mono font-bold text-sm text-zinc-100">1</span>
                 </div>
             </div>
         </div>
@@ -592,8 +581,56 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="como 1907">
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="cagliari calcio">
             <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">2</td>
+            <td class="py-3 px-3">
+                <div class="flex items-center gap-2.5">
+                    <img src="https://crests.football-data.org/104.png" alt="Cagliari Calcio" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
+                    <div>
+                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
+                            <span>Cagliari</span>
+                            <span class="text-[9px] font-bold text-cyan-400">UCL</span>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-emerald-400">+1</td>
+            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">3</td>
+            <td class="py-3 px-3 hidden md:table-cell">
+                <div class="flex gap-1 justify-center"></div>
+            </td>
+        </tr>
+        
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="ssc napoli">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">2</td>
+            <td class="py-3 px-3">
+                <div class="flex items-center gap-2.5">
+                    <img src="https://crests.football-data.org/113.png" alt="SSC Napoli" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
+                    <div>
+                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
+                            <span>Napoli</span>
+                            <span class="text-[9px] font-bold text-cyan-400">UCL</span>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-emerald-400">+1</td>
+            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">3</td>
+            <td class="py-3 px-3 hidden md:table-cell">
+                <div class="flex gap-1 justify-center"></div>
+            </td>
+        </tr>
+        
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="como 1907">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">4</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/7397.png" alt="Como 1907" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
@@ -617,7 +654,7 @@
         </tr>
         
         <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="udinese calcio">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">2</td>
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">4</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/115.png" alt="Udinese Calcio" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
@@ -640,111 +677,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="cagliari calcio">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">4</td>
-            <td class="py-3 px-3">
-                <div class="flex items-center gap-2.5">
-                    <img src="https://crests.football-data.org/104.png" alt="Cagliari Calcio" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
-                    <div>
-                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
-                            <span>Cagliari</span>
-                            <span class="text-[9px] font-bold text-cyan-400">UCL</span>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-zinc-400">+0</td>
-            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">1</td>
-            <td class="py-3 px-3 hidden md:table-cell">
-                <div class="flex gap-1 justify-center"></div>
-            </td>
-        </tr>
-        
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="genoa cfc">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">4</td>
-            <td class="py-3 px-3">
-                <div class="flex items-center gap-2.5">
-                    <img src="https://crests.football-data.org/107.png" alt="Genoa CFC" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
-                    <div>
-                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
-                            <span>Genoa</span>
-                            <span class="text-[9px] font-bold text-cyan-400">UCL</span>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-zinc-400">+0</td>
-            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">1</td>
-            <td class="py-3 px-3 hidden md:table-cell">
-                <div class="flex gap-1 justify-center"></div>
-            </td>
-        </tr>
-        
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="parma calcio 1913">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">4</td>
-            <td class="py-3 px-3">
-                <div class="flex items-center gap-2.5">
-                    <img src="https://crests.football-data.org/112.png" alt="Parma Calcio 1913" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
-                    <div>
-                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
-                            <span>Parma</span>
-                            <span class="text-[9px] font-bold text-cyan-400">UCL</span>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-zinc-400">+0</td>
-            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">1</td>
-            <td class="py-3 px-3 hidden md:table-cell">
-                <div class="flex gap-1 justify-center"></div>
-            </td>
-        </tr>
-        
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-cyan-500 bg-cyan-500/5" data-team="ssc napoli">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">4</td>
-            <td class="py-3 px-3">
-                <div class="flex items-center gap-2.5">
-                    <img src="https://crests.football-data.org/113.png" alt="SSC Napoli" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
-                    <div>
-                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
-                            <span>Napoli</span>
-                            <span class="text-[9px] font-bold text-cyan-400">UCL</span>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
-            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
-            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-zinc-400">+0</td>
-            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">1</td>
-            <td class="py-3 px-3 hidden md:table-cell">
-                <div class="flex gap-1 justify-center"></div>
-            </td>
-        </tr>
-        
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="ac milan">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="ac milan">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/98.png" alt="AC Milan" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Milan</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -760,15 +701,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="acf fiorentina">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="acf fiorentina">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/99.png" alt="ACF Fiorentina" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Fiorentina</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -784,15 +725,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="as roma">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="as roma">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/100.png" alt="AS Roma" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Roma</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -808,15 +749,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="atalanta bc">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="atalanta bc">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/102.png" alt="Atalanta BC" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Atalanta</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -832,15 +773,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="bologna fc 1909">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="bologna fc 1909">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/103.png" alt="Bologna FC 1909" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Bologna</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -856,15 +797,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="frosinone calcio">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="frosinone calcio">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/470.png" alt="Frosinone Calcio" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Frosinone</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -880,15 +821,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="juventus fc">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="juventus fc">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/109.png" alt="Juventus FC" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Juventus</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -904,15 +845,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="ss lazio">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="ss lazio">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/110.png" alt="SS Lazio" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Lazio</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -928,15 +869,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="us sassuolo calcio">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="us sassuolo calcio">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/471.png" alt="US Sassuolo Calcio" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Sassuolo</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -952,15 +893,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="torino fc">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="torino fc">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/586.png" alt="Torino FC" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Torino</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -976,15 +917,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="us lecce">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="us lecce">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/5890.png" alt="US Lecce" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Lecce</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -1000,15 +941,15 @@
             </td>
         </tr>
         
-        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-transparent" data-team="venezia fc">
-            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">8</td>
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-blue-500 bg-blue-500/5" data-team="venezia fc">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">6</td>
             <td class="py-3 px-3">
                 <div class="flex items-center gap-2.5">
                     <img src="https://crests.football-data.org/454.png" alt="Venezia FC" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
                     <div>
                         <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
                             <span>Venezia FC</span>
-                            
+                            <span class="text-[9px] font-bold text-blue-400">UEL</span>
                         </div>
                     </div>
                 </div>
@@ -1018,6 +959,54 @@
             <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
             <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
             <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-zinc-400">+0</td>
+            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">0</td>
+            <td class="py-3 px-3 hidden md:table-cell">
+                <div class="flex gap-1 justify-center"></div>
+            </td>
+        </tr>
+        
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-rose-500 bg-rose-500/5" data-team="genoa cfc">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">18</td>
+            <td class="py-3 px-3">
+                <div class="flex items-center gap-2.5">
+                    <img src="https://crests.football-data.org/107.png" alt="Genoa CFC" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
+                    <div>
+                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
+                            <span>Genoa</span>
+                            <span class="text-[9px] font-bold text-rose-400">REL</span>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
+            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-rose-400">-1</td>
+            <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">0</td>
+            <td class="py-3 px-3 hidden md:table-cell">
+                <div class="flex gap-1 justify-center"></div>
+            </td>
+        </tr>
+        
+        <tr class="table-row border-b border-zinc-800/40 hover:bg-zinc-800/50 transition border-l-2 border-l-rose-500 bg-rose-500/5" data-team="parma calcio 1913">
+            <td class="py-3 px-3 font-mono text-zinc-400 text-xs font-semibold">18</td>
+            <td class="py-3 px-3">
+                <div class="flex items-center gap-2.5">
+                    <img src="https://crests.football-data.org/112.png" alt="Parma Calcio 1913" class="w-6 h-6 object-contain drop-shadow-sm" onerror="this.style.display='none'"/>
+                    <div>
+                        <div class="font-semibold text-zinc-100 flex items-center gap-1.5">
+                            <span>Parma</span>
+                            <span class="text-[9px] font-bold text-rose-400">REL</span>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-300">1</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">0</td>
+            <td class="py-3 px-2 text-center font-mono text-zinc-400 hidden sm:table-cell">1</td>
+            <td class="py-3 px-2 text-center font-mono text-xs font-semibold text-rose-400">-1</td>
             <td class="py-3 px-3 text-center font-mono font-bold text-zinc-100 text-sm">0</td>
             <td class="py-3 px-3 hidden md:table-cell">
                 <div class="flex gap-1 justify-center"></div>
@@ -1216,18 +1205,34 @@
                 }
             });
         });
-        // 3. Prevent Background Tab Ticker Desync
-        document.addEventListener('visibilitychange', function() {
+        // Continuous, tab-resilient JS Marquee Engine
+        (function() {
             const track = document.querySelector('.ticker-track');
-            if (!track) return;
-            
-            if (document.hidden) {
-                track.style.animationPlayState = 'paused';
-            } else {
-                // Force a micro reflow so the browser re-syncs cleanly
-                track.style.animationPlayState = 'running';
+            const container = document.querySelector('.ticker-container');
+            if (!track || !container) return;
+
+            let pos = 0;
+            let isHovered = false;
+            const speed = 0.65; // Adjust speed: lower is slower, higher is faster
+
+            container.addEventListener('mouseenter', function() { isHovered = true; });
+            container.addEventListener('mouseleave', function() { isHovered = false; });
+
+            function step() {
+                if (!isHovered) {
+                    pos -= speed;
+                    // Reset seamlessly at the exact halfway mark (second duplicate copy begins)
+                    const halfWidth = track.scrollWidth / 2;
+                    if (Math.abs(pos) >= halfWidth) {
+                        pos = 0;
+                    }
+                    track.style.transform = `translate3d(${pos}px, 0, 0)`;
+                }
+                requestAnimationFrame(step);
             }
-        });
+
+            requestAnimationFrame(step);
+        })();
     </script>
 </body>
 </html>
