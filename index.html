@@ -11,17 +11,22 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-50%, 0, 0); }
         }
+        
         .ticker-track {
             display: inline-flex;
             width: max-content;
             animation: ticker 45s linear infinite;
+            will-change: transform;
         }
-        .ticker-container:hover .ticker-track {
-            animation-play-state: paused;
+        
+        .ticker-container:hover .ticker-track,
+        .ticker-track:hover {
+            animation-play-state: paused !important;
         }
     </style>
 </head>
@@ -185,7 +190,7 @@
             <div class="flex items-center gap-3">
                 <div class="text-xs font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 px-3.5 py-1.5 rounded-lg flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 15:00 UTC</span></span>
+                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 15:21 UTC</span></span>
                 </div>
             </div>
         </header>

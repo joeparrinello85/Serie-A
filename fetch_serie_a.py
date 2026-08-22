@@ -238,17 +238,22 @@ def build_dashboard():
     <style>
         body {{ font-family: 'Plus Jakarta Sans', sans-serif; }}
         .font-mono {{ font-family: 'JetBrains Mono', monospace; }}
+        
         @keyframes ticker {{
             0% {{ transform: translate3d(0, 0, 0); }}
             100% {{ transform: translate3d(-50%, 0, 0); }}
         }}
+        
         .ticker-track {{
             display: inline-flex;
             width: max-content;
             animation: ticker 45s linear infinite;
+            will-change: transform;
         }}
-        .ticker-container:hover .ticker-track {{
-            animation-play-state: paused;
+        
+        .ticker-container:hover .ticker-track,
+        .ticker-track:hover {{
+            animation-play-state: paused !important;
         }}
     </style>
 </head>
