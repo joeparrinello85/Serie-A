@@ -53,82 +53,74 @@ def fetch_news() -> list:
 
 
 def fetch_youtube_highlights() -> list:
-    """Fetches and merges match highlights from Serie A and CBS Sports Golazo YouTube channels."""
-    feeds = [
-        {
-            "name": "Serie A",
-            "badge_color": "bg-blue-600/30 text-blue-400 border-blue-500/30",
-            "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCBJeMCIeLQos7wacox4hmLQ",
-            "keyword_filter": lambda t: "HIGHLIGHT" in t and not any(k in t for k in [
-                "CONFERENZA", "INTERVIEW", "INTERVISTA", "TOP 5", "TOP 10", 
-                "BEST SAVES", "TACTICAL", "INSIDE", "PREVIEW", "SHORT", "DRAW", "VOTING"
-            ])
-        },
-        {
-            "name": "CBS Golazo",
-            "badge_color": "bg-emerald-600/30 text-emerald-400 border-emerald-500/30",
-            "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCET00YnetHT7tOpu12v8jxg",
-            "keyword_filter": lambda t: ("SERIE A" in t or "EXTENDED HIGHLIGHTS" in t) and "HIGHLIGHT" in t and not any(k in t for k in [
-                "UCL", "CHAMPIONS LEAGUE", "CARABAO", "EFL", "PREMIER LEAGUE", "LIGA MX", "REACTION", "PREDICTING", "PODCAST"
-            ])
-        }
+    """Fetches strictly the top 2 newest Serie A match highlights from CBS Sports Golazo."""
+    # CBS Sports Golazo Channel ID: UCET00YnetHT7tOpu12v8jxg
+    channel_url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCET00YnetHT7tOpu12v8jxg"
+    videos = []
+    
+    EXCLUDED_KEYWORDS = [
+        "UCL", "CHAMPIONS LEAGUE", "CARABAO", "EFL", "PREMIER LEAGUE", 
+        "LIGA MX", "REACTION", "PREDICTING", "PODCAST", "CONFERENZA", 
+        "INTERVIEW", "INTERVISTA", "SHORT"
     ]
+    
+    try:
+        req = urllib.request.Request(
+            channel_url,
+            headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            root = ET.fromstring(resp.read())
+            ns = {
+                "atom": "http://www.w3.org/2005/Atom",
+                "yt": "http://www.youtube.com/xml/schemas/2015"
+            }
 
-    all_videos = []
-    seen_ids = set()
+            for entry in root.findall("atom:entry", ns):
+                video_id_el = entry.find("yt:videoId", ns)
+                title_el = entry.find("atom:title", ns)
+                published_el = entry.find("atom:published", ns)
 
-    for feed_info in feeds:
-        try:
-            req = urllib.request.Request(
-                feed_info["url"],
-                headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
-            )
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                root = ET.fromstring(resp.read())
-                ns = {
-                    "atom": "http://www.w3.org/2005/Atom",
-                    "yt": "http://www.youtube.com/xml/schemas/2015"
-                }
+                if video_id_el is not None and title_el is not None:
+                    raw_title = title_el.text or ""
+                    vid = video_id_el.text or ""
+                    pub = published_el.text[:10] if published_el is not None and published_el.text else ""
+                    upper_title = raw_title.upper()
 
-                for entry in root.findall("atom:entry", ns):
-                    video_id_el = entry.find("yt:videoId", ns)
-                    title_el = entry.find("atom:title", ns)
-                    published_el = entry.find("atom:published", ns)
+                    # 1. Require Serie A and highlight indicators
+                    if not (("SERIE A" in upper_title or "EXTENDED HIGHLIGHTS" in upper_title) and "HIGHLIGHT" in upper_title):
+                        continue
 
-                    if video_id_el is not None and title_el is not None:
-                        vid = video_id_el.text or ""
-                        raw_title = title_el.text or ""
-                        pub = published_el.text[:10] if published_el is not None and published_el.text else ""
-                        upper_title = raw_title.upper()
+                    # 2. Skip non-Serie A leagues and studio talk
+                    if any(bad_word in upper_title for bad_word in EXCLUDED_KEYWORDS):
+                        continue
 
-                        if vid in seen_ids or not feed_info["keyword_filter"](upper_title):
-                            continue
+                    # 3. Clean up the title display
+                    clean_title = (
+                        raw_title.replace("HIGHLIGHTS |", "")
+                        .replace("HIGHLIGHTS:", "")
+                        .replace("Extended Highlights |", "")
+                        .replace("| Serie A | CBS Sports Golazo", "")
+                        .replace("| Serie A", "")
+                        .replace("| CBS Sports Golazo", "")
+                        .strip()
+                    )
+                    if "|" in clean_title:
+                        clean_title = clean_title.split("|")[0].strip()
 
-                        # Clean up title
-                        clean_title = (
-                            raw_title.replace("HIGHLIGHTS |", "")
-                            .replace("HIGHLIGHTS:", "")
-                            .replace("Extended Highlights |", "")
-                            .replace("| Serie A | CBS Sports Golazo", "")
-                            .strip()
-                        )
-                        if "|" in clean_title:
-                            clean_title = clean_title.split("|")[0].strip()
+                    videos.append({
+                        "id": vid,
+                        "title": clean_title,
+                        "date": pub
+                    })
 
-                        seen_ids.add(vid)
-                        all_videos.append({
-                            "id": vid,
-                            "title": clean_title,
-                            "date": pub,
-                            "source": feed_info["name"],
-                            "badge_color": feed_info["badge_color"]
-                        })
-        except Exception as e:
-            print(f"Error fetching highlights from {feed_info['name']}: {e}")
+                    if len(videos) == 2:
+                        break
 
-    # Sort combined videos by newest published date and return top 4 (or 6)
-    all_videos.sort(key=lambda x: x["date"], reverse=True)
-    return all_videos[:4]
+    except Exception as e:
+        print(f"Error fetching CBS Golazo highlights: {e}")
+
+    return videos
 
 
 def build_dashboard():
@@ -268,7 +260,7 @@ def build_dashboard():
         </div>
         """)
 
-   # 3. Highlights Cards
+   # 3. Highlights Cards (CBS Sports Golazo)
     highlight_cards = []
     for v in highlight_videos:
         highlight_cards.append(f"""
@@ -288,7 +280,7 @@ def build_dashboard():
             <div class="p-3 flex justify-between items-start gap-2">
                 <div>
                     <div class="flex items-center gap-1.5 mb-1">
-                        <span class="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded border {v['badge_color']}">{v['source']}</span>
+                        <span class="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded border bg-emerald-600/30 text-emerald-400 border-emerald-500/30">CBS Golazo</span>
                         <span class="font-mono text-[10px] text-zinc-500">{v['date']}</span>
                     </div>
                     <h3 class="text-xs font-semibold text-zinc-200 line-clamp-2 group-hover:text-cyan-400 transition">{v['title']}</h3>
@@ -437,16 +429,16 @@ def build_dashboard():
             </div>
         </section>
 
-        <!-- Official YouTube Highlights Section -->
+        <!-- CBS Sports Golazo Highlights Section -->
         <section class="space-y-3">
             <div class="flex justify-between items-center">
                 <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-zinc-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-sm bg-rose-500"></span> Match Recaps & Highlights
+                    <span class="w-2 h-2 rounded-sm bg-emerald-500"></span> Match Highlights & Extended Recaps
                 </h2>
-                <span class="text-[11px] font-mono text-zinc-500">Official Serie A Channel</span>
+                <span class="text-[11px] font-mono text-zinc-500">CBS Sports Golazo</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {"".join(highlight_cards) if highlight_cards else '<p class="text-xs text-zinc-500">No highlight videos available.</p>'}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {"".join(highlight_cards) if highlight_cards else '<p class="text-xs text-zinc-500">No match highlights available at this time.</p>'}
             </div>
         </section>
 
