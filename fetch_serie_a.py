@@ -65,7 +65,7 @@ def build_dashboard():
     print("4/4 Fetching Dispatch Headlines...")
     news_items = fetch_news()
 
-    # 1. Standings Table with Form Badges
+    # 1. Standings Table
     table_rows = []
     for row in standings_data.get("standings", [{}])[0].get("table", []):
         pos = row.get("position")
@@ -128,7 +128,7 @@ def build_dashboard():
         </tr>
         """)
 
-    # 2. Match Center Cards
+    # 2. Match Center Cards (Embeds data-utc for JS conversion)
     matches = matches_data.get("matches", [])
     active_matches = [m for m in matches if m.get("status") in ("TIMED", "SCHEDULED", "IN_PLAY")][:8]
     if not active_matches:
@@ -143,26 +143,15 @@ def build_dashboard():
         st = m.get("status")
         sh = m.get("score", {}).get("fullTime", {}).get("home")
         sa = m.get("score", {}).get("fullTime", {}).get("away")
-        
         utc_date_str = m.get("utcDate", "")
-        date_str = utc_date_str[:10] if utc_date_str else ""
-        time_str = utc_date_str[11:16] + " UTC" if len(utc_date_str) >= 16 else ""
-
-        # Friendly status badge
-        if st == "IN_PLAY":
-            status_badge = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono uppercase text-[10px] font-bold animate-pulse">LIVE</span>'
-        elif st == "FINISHED":
-            status_badge = '<span class="px-2 py-0.5 rounded bg-zinc-800 font-mono uppercase text-[10px] text-zinc-400">FT</span>'
-        elif st == "TIMED":
-            status_badge = f'<span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">{time_str}</span>'
-        else:
-            status_badge = f'<span class="px-2 py-0.5 rounded bg-zinc-800 font-mono uppercase text-[10px] text-zinc-400">{st}</span>'
 
         match_cards.append(f"""
-        <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
+        <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition match-card" data-utc="{utc_date_str}" data-status="{st}">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
-                <span class="font-mono text-[11px] text-zinc-400">{date_str}</span>
-                {status_badge}
+                <span class="font-mono text-[11px] text-zinc-400 match-date">{utc_date_str[:10]}</span>
+                <span class="match-badge">
+                    <span class="px-2 py-0.5 rounded bg-zinc-800 font-mono uppercase text-[10px] text-zinc-400">{st}</span>
+                </span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -183,7 +172,7 @@ def build_dashboard():
         </div>
         """)
 
-    # 3. Top Scorers with Progress Bars
+    # 3. Top Scorers
     scorers = scorers_data.get("scorers", [])[:6]
     max_goals = scorers[0].get("goals", 1) if scorers else 1
     scorer_rows = []
@@ -212,7 +201,7 @@ def build_dashboard():
         </div>
         """)
 
-    # 4. Ticker Headlines (Duplicate array for seamless infinite scroll)
+    # 4. News Ticker
     ticker_items_html = ""
     for n in news_items:
         ticker_items_html += f"""
@@ -238,19 +227,16 @@ def build_dashboard():
     <style>
         body {{ font-family: 'Plus Jakarta Sans', sans-serif; }}
         .font-mono {{ font-family: 'JetBrains Mono', monospace; }}
-        
         @keyframes ticker {{
             0% {{ transform: translate3d(0, 0, 0); }}
             100% {{ transform: translate3d(-50%, 0, 0); }}
         }}
-        
         .ticker-track {{
             display: inline-flex;
             width: max-content;
             animation: ticker 45s linear infinite;
             will-change: transform;
         }}
-        
         .ticker-container:hover .ticker-track,
         .ticker-track:hover {{
             animation-play-state: paused !important;
@@ -308,6 +294,7 @@ def build_dashboard():
                 <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-zinc-400 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-sm bg-cyan-400"></span> Match Center
                 </h2>
+                <span id="userTimezoneLabel" class="text-[11px] font-mono text-zinc-500">Local Kickoffs</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {"".join(match_cards) if match_cards else '<p class="text-xs text-zinc-500">No matches found.</p>'}
@@ -329,7 +316,6 @@ def build_dashboard():
                         </div>
                     </div>
                     
-                    <!-- Instant Client-Side Team Filter -->
                     <input type="text" id="teamSearch" placeholder="Filter team..." 
                            class="bg-zinc-950 border border-zinc-800 text-xs px-3 py-1.5 rounded-lg text-zinc-200 focus:outline-none focus:border-cyan-500 transition w-full sm:w-40 font-mono"/>
                 </div>
@@ -371,13 +357,53 @@ def build_dashboard():
 
     </div>
 
-    <!-- Instant Search Script -->
+   <!-- Client-Side Scripts -->
     <script>
+        // 1. Instant Team Filter
         document.getElementById('teamSearch').addEventListener('input', function(e) {{
             const query = e.target.value.toLowerCase();
             document.querySelectorAll('#tableBody .table-row').forEach(function(row) {{
                 const team = row.getAttribute('data-team') || '';
                 row.style.display = team.includes(query) ? '' : 'none';
+            }});
+        }});
+
+        // 2. Client-Side Timezone Auto-Converter (Clean Local Kickoff Time)
+        document.addEventListener('DOMContentLoaded', function() {{
+            const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const tzShort = new Date().toLocaleTimeString('en-US', {{ timeZoneName: 'short' }}).split(' ')[2] || '';
+            const tzLabel = document.getElementById('userTimezoneLabel');
+            if (tzLabel && tzShort) {{
+                tzLabel.textContent = `Times in ${{tzShort}} (${{userTz}})`;
+            }}
+
+            document.querySelectorAll('.match-card').forEach(function(card) {{
+                const rawUtc = card.getAttribute('data-utc');
+                const status = card.getAttribute('data-status');
+                if (!rawUtc) return;
+
+                const matchDate = new Date(rawUtc);
+                const dateEl = card.querySelector('.match-date');
+                const badgeEl = card.querySelector('.match-badge');
+
+                // Format localized day & time (e.g., "Sat, Aug 22" and "12:45 PM")
+                const dayName = matchDate.toLocaleDateString('en-US', {{ weekday: 'short' }});
+                const monthDay = matchDate.toLocaleDateString('en-US', {{ month: 'short', day: 'numeric' }});
+                const timeStr = matchDate.toLocaleTimeString('en-US', {{ hour: 'numeric', minute: '2-digit' }});
+
+                if (dateEl) {{
+                    dateEl.textContent = `${{dayName}}, ${{monthDay}}`;
+                }}
+
+                if (badgeEl) {{
+                    if (status === 'IN_PLAY') {{
+                        badgeEl.innerHTML = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono uppercase text-[10px] font-bold animate-pulse">LIVE</span>';
+                    }} else if (status === 'FINISHED') {{
+                        badgeEl.innerHTML = '<span class="px-2 py-0.5 rounded bg-zinc-800 font-mono uppercase text-[10px] text-zinc-400">FT</span>';
+                    }} else {{
+                        badgeEl.innerHTML = `<span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">${{timeStr}}</span>`;
+                    }}
+                }}
             }});
         }});
     </script>
