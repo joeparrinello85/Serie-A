@@ -22,7 +22,7 @@
         .ticker-track {
             display: inline-flex;
             width: max-content;
-            animation: ticker 45s linear infinite;
+            animation: ticker 65s linear infinite;
             backface-visibility: hidden;
             perspective: 1000px;
             transform: translate3d(0, 0, 0);
@@ -193,7 +193,7 @@
             <div class="flex items-center gap-3">
                 <div class="text-xs font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 px-3.5 py-1.5 rounded-lg flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 19:56 UTC</span></span>
+                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 20:08 UTC</span></span>
                 </div>
             </div>
         </header>
@@ -1215,6 +1215,18 @@
                     }
                 }
             });
+        });
+        // 3. Prevent Background Tab Ticker Desync
+        document.addEventListener('visibilitychange', function() {
+            const track = document.querySelector('.ticker-track');
+            if (!track) return;
+            
+            if (document.hidden) {
+                track.style.animationPlayState = 'paused';
+            } else {
+                // Force a micro reflow so the browser re-syncs cleanly
+                track.style.animationPlayState = 'running';
+            }
         });
     </script>
 </body>

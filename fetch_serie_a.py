@@ -360,7 +360,7 @@ def build_dashboard():
         .ticker-track {{
             display: inline-flex;
             width: max-content;
-            animation: ticker 45s linear infinite;
+            animation: ticker 65s linear infinite;
             backface-visibility: hidden;
             perspective: 1000px;
             transform: translate3d(0, 0, 0);
@@ -549,6 +549,18 @@ def build_dashboard():
                     }}
                 }}
             }});
+        }});
+        // 3. Prevent Background Tab Ticker Desync
+        document.addEventListener('visibilitychange', function() {{
+            const track = document.querySelector('.ticker-track');
+            if (!track) return;
+            
+            if (document.hidden) {{
+                track.style.animationPlayState = 'paused';
+            }} else {{
+                // Force a micro reflow so the browser re-syncs cleanly
+                track.style.animationPlayState = 'running';
+            }}
         }});
     </script>
 </body>
