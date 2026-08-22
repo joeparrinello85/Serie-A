@@ -52,18 +52,61 @@ def fetch_news() -> list:
     return articles
 
 
+def fetch_youtube_highlights() -> list:
+    """Fetches latest official match highlights from Serie A YouTube channel RSS."""
+    # Official Serie A Channel ID: UCBJeMCIeLQos7wacox4hmLQ
+    channel_url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCBJeMCIeLQos7wacox4hmLQ"
+    videos = []
+    try:
+        req = urllib.request.Request(
+            channel_url,
+            headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            root = ET.fromstring(resp.read())
+            ns = {
+                "atom": "http://www.w3.org/2005/Atom",
+                "yt": "http://www.youtube.com/xml/schemas/2015"
+            }
+            for entry in root.findall("atom:entry", ns):
+                video_id_el = entry.find("yt:videoId", ns)
+                title_el = entry.find("atom:title", ns)
+                published_el = entry.find("atom:published", ns)
+
+                if video_id_el is not None and title_el is not None:
+                    title = title_el.text or ""
+                    vid = video_id_el.text or ""
+                    pub = published_el.text[:10] if published_el is not None and published_el.text else ""
+                    
+                    # Clean up common title prefixes
+                    clean_title = title.replace("HIGHLIGHTS |", "").replace("HIGHLIGHTS", "").strip()
+                    videos.append({
+                        "id": vid,
+                        "title": clean_title,
+                        "date": pub
+                    })
+                    if len(videos) == 4:
+                        break
+    except Exception as e:
+        print(f"Error fetching YouTube highlights: {e}")
+    return videos
+
+
 def build_dashboard():
-    print("1/4 Fetching Standings & Form...")
+    print("1/5 Fetching Standings & Form...")
     standings_data = fetch_api(f"/competitions/{COMPETITION}/standings")
 
-    print("2/4 Fetching Fixtures...")
+    print("2/5 Fetching Fixtures...")
     matches_data = fetch_api(f"/competitions/{COMPETITION}/matches")
 
-    print("3/4 Fetching Top Scorers...")
+    print("3/5 Fetching Top Scorers...")
     scorers_data = fetch_api(f"/competitions/{COMPETITION}/scorers")
 
-    print("4/4 Fetching Dispatch Headlines...")
+    print("4/5 Fetching Dispatch Headlines...")
     news_items = fetch_news()
+
+    print("5/5 Fetching YouTube Match Highlights...")
+    highlight_videos = fetch_youtube_highlights()
 
     # 1. Standings Table
     table_rows = []
@@ -128,7 +171,7 @@ def build_dashboard():
         </tr>
         """)
 
-    # 2. Match Center Cards (Embeds data-utc for JS conversion)
+    # 2. Match Center Cards (Embeds data-utc for local JS conversion)
     matches = matches_data.get("matches", [])
     active_matches = [m for m in matches if m.get("status") in ("TIMED", "SCHEDULED", "IN_PLAY")][:8]
     if not active_matches:
@@ -172,7 +215,38 @@ def build_dashboard():
         </div>
         """)
 
-    # 3. Top Scorers
+    # 3. Highlights Cards
+    highlight_cards = []
+    for v in highlight_videos:
+        highlight_cards.append(f"""
+        <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition group">
+            <div class="relative w-full pb-[56.25%] bg-zinc-950">
+                <iframe 
+                    class="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube-nocookie.com/embed/{v['id']}?rel=0" 
+                    title="{v['title']}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="lazy"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="p-3 flex justify-between items-start gap-2">
+                <div>
+                    <h3 class="text-xs font-semibold text-zinc-200 line-clamp-2 group-hover:text-cyan-400 transition">{v['title']}</h3>
+                    <span class="font-mono text-[10px] text-zinc-500 mt-1 block">{v['date']}</span>
+                </div>
+                <a href="https://www.youtube.com/watch?v={v['id']}" target="_blank" rel="noopener noreferrer" 
+                   class="shrink-0 text-[10px] font-mono bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-1 rounded transition" 
+                   title="Open on YouTube">
+                    ↗
+                </a>
+            </div>
+        </div>
+        """)
+
+    # 4. Top Scorers
     scorers = scorers_data.get("scorers", [])[:6]
     max_goals = scorers[0].get("goals", 1) if scorers else 1
     scorer_rows = []
@@ -201,11 +275,11 @@ def build_dashboard():
         </div>
         """)
 
-    # 4. News Ticker
+    # 5. News Ticker
     ticker_items_html = ""
     for n in news_items:
         ticker_items_html += f"""
-        <a href="{n['link']}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+        <a href="{n['link']}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 whitespace-nowrap">
             <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
             <span class="font-semibold text-zinc-100">{n['title']}</span>
             <span class="text-[10px] font-mono text-zinc-500">[{n['date']}]</span>
@@ -217,6 +291,10 @@ def build_dashboard():
     html = f"""<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Calcio Intelligence | Serie A Hub</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcio Intelligence | Serie A Hub</title>
@@ -235,10 +313,12 @@ def build_dashboard():
             display: inline-flex;
             width: max-content;
             animation: ticker 45s linear infinite;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            transform: translate3d(0, 0, 0);
             will-change: transform;
         }}
-        .ticker-container:hover .ticker-track,
-        .ticker-track:hover {{
+        .ticker-container:hover .ticker-track {{
             animation-play-state: paused !important;
         }}
     </style>
@@ -277,7 +357,7 @@ def build_dashboard():
                         Serie A Intelligence
                     </h1>
                 </div>
-                <p class="text-xs text-zinc-400">Fixtures, league metrics, golden boot race, and live match dispatch</p>
+                <p class="text-xs text-zinc-400">Fixtures, league metrics, golden boot race, and official match highlights</p>
             </div>
             
             <div class="flex items-center gap-3">
@@ -298,6 +378,19 @@ def build_dashboard():
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {"".join(match_cards) if match_cards else '<p class="text-xs text-zinc-500">No matches found.</p>'}
+            </div>
+        </section>
+
+        <!-- Official YouTube Highlights Section -->
+        <section class="space-y-3">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-zinc-400 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-sm bg-rose-500"></span> Match Recaps & Highlights
+                </h2>
+                <span class="text-[11px] font-mono text-zinc-500">Official Serie A Channel</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {"".join(highlight_cards) if highlight_cards else '<p class="text-xs text-zinc-500">No highlight videos available.</p>'}
             </div>
         </section>
 
@@ -357,7 +450,7 @@ def build_dashboard():
 
     </div>
 
-   <!-- Client-Side Scripts -->
+    <!-- Client-Side Scripts -->
     <script>
         // 1. Instant Team Filter
         document.getElementById('teamSearch').addEventListener('input', function(e) {{
@@ -368,7 +461,7 @@ def build_dashboard():
             }});
         }});
 
-        // 2. Client-Side Timezone Auto-Converter (Clean Local Kickoff Time)
+        // 2. Client-Side Timezone Auto-Converter (Localized Kickoff Time)
         document.addEventListener('DOMContentLoaded', function() {{
             const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const tzShort = new Date().toLocaleTimeString('en-US', {{ timeZoneName: 'short' }}).split(' ')[2] || '';
@@ -386,7 +479,6 @@ def build_dashboard():
                 const dateEl = card.querySelector('.match-date');
                 const badgeEl = card.querySelector('.match-badge');
 
-                // Format localized day & time (e.g., "Sat, Aug 22" and "12:45 PM")
                 const dayName = matchDate.toLocaleDateString('en-US', {{ weekday: 'short' }});
                 const monthDay = matchDate.toLocaleDateString('en-US', {{ month: 'short', day: 'numeric' }});
                 const timeStr = matchDate.toLocaleTimeString('en-US', {{ hour: 'numeric', minute: '2-digit' }});
