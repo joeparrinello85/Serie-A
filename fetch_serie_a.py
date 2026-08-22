@@ -171,11 +171,25 @@ def build_dashboard():
         </tr>
         """)
 
-    # 2. Match Center Cards (Embeds data-utc for local JS conversion)
+   # 2. Match Center: Show full current/relevant matchday slate (Finished + Live + Upcoming)
     matches = matches_data.get("matches", [])
-    active_matches = [m for m in matches if m.get("status") in ("TIMED", "SCHEDULED", "IN_PLAY")][:8]
-    if not active_matches:
-        active_matches = [m for m in matches if m.get("status") == "FINISHED"][-8:]
+    
+    # 1. Determine current matchday number from API data
+    current_matchday = None
+    for m in matches:
+        if m.get("status") in ("IN_PLAY", "PAUSED", "TIMED", "SCHEDULED"):
+            current_matchday = m.get("matchday")
+            break
+            
+    # Fallback to the latest matchday if all matches are finished
+    if not current_matchday and matches:
+        current_matchday = matches[-1].get("matchday")
+
+    # 2. Filter matches for the active matchday
+    if current_matchday:
+        active_matches = [m for m in matches if m.get("matchday") == current_matchday]
+    else:
+        active_matches = matches[-10:]
 
     match_cards = []
     for m in active_matches:
