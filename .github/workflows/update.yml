@@ -1,13 +1,19 @@
 name: Update Serie A Intelligence Hub
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    # Runs every 15 mins from 10:00 UTC to 23:59 UTC (4:00 AM – 6:00 PM MDT) on Fri, Sat, Sun, Mon
-    - cron: '*/15 10-23 * * 5,6,0,1'
-    # Off-hours every 2 hours
-    - cron: '0 0-9 * * 5,6,0,1'
-    # Mid-week every 6 hours
-    - cron: '0 */6 * * 2,3,4'
+    # 1. Matchday Windows (Fri, Sat, Sun, Mon): Every 15 minutes between 10:00 and 23:59 UTC (4 AM - 6 PM MDT)
+    - cron: '*/15 10-23 * * 0,1,5,6'
+
+    # 2. Matchday Off-Hours (Fri, Sat, Sun, Mon): Every 2 hours overnight
+    - cron: '0 0,2,4,6,8 * * 0,1,5,6'
+
+    # 3. Mid-Week Maintenance (Tue, Wed, Thu): Every 6 hours
+    - cron: '0 0,6,12,18 * * 2,3,4'
+
   workflow_dispatch:
 
 permissions:
