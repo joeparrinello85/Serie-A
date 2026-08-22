@@ -1,5 +1,13 @@
 name: Update Serie A Intelligence Hub
 
+name: Commit Updated Index
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-update Serie A data [skip ci]" || echo "No changes to commit"
+          git pull --rebase origin main || true
+          git push origin main
 on:
   schedule:
     # 1. Matchday Windows: Every 15 mins between 12:00 and 22:00 UTC on Fri, Sat, Sun, Mon
