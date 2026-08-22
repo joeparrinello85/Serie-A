@@ -11,14 +11,164 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .ticker-track {
+            display: inline-flex;
+            width: max-content;
+            animation: ticker 45s linear infinite;
+        }
+        .ticker-container:hover .ticker-track {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-[#090a0f] text-zinc-100 min-h-screen antialiased selection:bg-cyan-500 selection:text-black">
     
+    <!-- Tricolore Header Bar -->
     <div class="h-1 w-full bg-gradient-to-r from-emerald-500 via-zinc-100 to-rose-500"></div>
+
+    <!-- Live Breaking News Stock Ticker -->
+    <div class="bg-zinc-950/90 border-b border-zinc-800/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="flex items-center">
+            <div class="bg-blue-600/90 text-white font-mono text-[11px] font-bold uppercase tracking-wider px-3.5 py-2 flex items-center gap-2 shrink-0 z-10 shadow-md">
+                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                <span>DISPATCH</span>
+            </div>
+            <div class="ticker-container overflow-hidden whitespace-nowrap flex-1 py-2">
+                <div class="ticker-track">
+                    
+        <a href="https://football-italia.net/nkunku-says-yes-leipzig-transfer-asking-price/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Milan have clear asking price as Nkunku says yes to RB Leipzig transfer</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/where-to-watch-serie-a-in-2026-27/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Where to watch Serie A in UK, USA, Canada and Australia in 2026-27</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/spalletti-juventus-ambition-vicario-kolo-muani/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Spalletti: ‘Juventus ambitious, Vicario and Kolo Muani start tomorrow’</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/spalletti-yildiz-important-juventus-arsenal/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Spalletti: ‘Yildiz future already important at Juventus’ even if Arsenal offer €100m</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/juventus-cabal-refusal-to-bologna-frustrating/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Juventus find Cabal refusal to join Bologna frustrating</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/report-rowe-target-atalanta-30m-offer-rejected/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Report Rowe targeted by Atalanta, but €30m offer rejected</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/gasperini-roma-need-2-more-to-complete-squad/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Gasperini: ‘Roma need two more to complete squad, had to be creative’</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/live-inter-monza-reaction-latest-news-serie-a/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Live: Inter vs. Monza post-match reaction, latest Serie A Round 1 team news</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/amorim-milan-dont-want-to-win-we-need-to-win/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Amorim: ‘Milan don’t want to win, we need to win’ starting from Torino</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/newcastle-behind-leipzig-race-milan-nkunku/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Newcastle ‘well behind’ RB Leipzig in race for Nkunku, says Milan expert</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+                    
+        <a href="https://football-italia.net/nkunku-says-yes-leipzig-transfer-asking-price/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Milan have clear asking price as Nkunku says yes to RB Leipzig transfer</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/where-to-watch-serie-a-in-2026-27/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Where to watch Serie A in UK, USA, Canada and Australia in 2026-27</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/spalletti-juventus-ambition-vicario-kolo-muani/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Spalletti: ‘Juventus ambitious, Vicario and Kolo Muani start tomorrow’</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/spalletti-yildiz-important-juventus-arsenal/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Spalletti: ‘Yildiz future already important at Juventus’ even if Arsenal offer €100m</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/juventus-cabal-refusal-to-bologna-frustrating/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Juventus find Cabal refusal to join Bologna frustrating</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/report-rowe-target-atalanta-30m-offer-rejected/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Report Rowe targeted by Atalanta, but €30m offer rejected</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/gasperini-roma-need-2-more-to-complete-squad/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Gasperini: ‘Roma need two more to complete squad, had to be creative’</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/live-inter-monza-reaction-latest-news-serie-a/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Live: Inter vs. Monza post-match reaction, latest Serie A Round 1 team news</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/amorim-milan-dont-want-to-win-we-need-to-win/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Amorim: ‘Milan don’t want to win, we need to win’ starting from Torino</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+        <a href="https://football-italia.net/newcastle-behind-leipzig-race-milan-nkunku/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 text-xs text-zinc-300 hover:text-cyan-400 transition whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="font-semibold text-zinc-100">Newcastle ‘well behind’ RB Leipzig in race for Nkunku, says Milan expert</span>
+            <span class="text-[10px] font-mono text-zinc-500">[Sat, 22 Aug 2026]</span>
+        </a>
+        
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
         
+        <!-- Main Header -->
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-zinc-800/80 gap-4">
             <div class="space-y-1">
                 <div class="flex items-center gap-3">
@@ -29,17 +179,18 @@
                         Serie A Intelligence
                     </h1>
                 </div>
-                <p class="text-xs text-zinc-400">Fixtures, league metrics, golden boot race, and live transfer desk</p>
+                <p class="text-xs text-zinc-400">Fixtures, league metrics, golden boot race, and live match dispatch</p>
             </div>
             
             <div class="flex items-center gap-3">
                 <div class="text-xs font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 px-3.5 py-1.5 rounded-lg flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 12:36 UTC</span></span>
+                    <span>Synced: <span class="text-zinc-200 font-semibold">2026-08-22 15:00 UTC</span></span>
                 </div>
             </div>
         </header>
 
+        <!-- Match Center Grid -->
         <section class="space-y-3">
             <div class="flex justify-between items-center">
                 <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-zinc-400 flex items-center gap-2">
@@ -51,7 +202,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-22</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">16:30 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -74,7 +225,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-22</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">16:30 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -97,7 +248,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-22</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">18:45 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -120,7 +271,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-22</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">18:45 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -143,7 +294,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-23</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">16:30 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -166,7 +317,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-23</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">16:30 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -189,7 +340,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-23</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">18:45 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -212,7 +363,7 @@
         <div class="bg-zinc-900/70 border border-zinc-800/80 rounded-xl p-3.5 backdrop-blur-sm flex flex-col justify-between hover:border-zinc-700 transition">
             <div class="flex justify-between items-center text-xs text-zinc-500 mb-2.5">
                 <span class="font-mono text-[11px] text-zinc-400">2026-08-23</span>
-                <span class="px-2 py-0.5 rounded bg-zinc-800/80 font-mono uppercase text-[10px] text-zinc-400">TIMED</span>
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">18:45 UTC</span>
             </div>
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
@@ -235,8 +386,10 @@
             </div>
         </section>
 
+        <!-- Main Content Area: Standings & Capocannoniere -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
+            <!-- Standings Table (2 Columns) -->
             <div class="lg:col-span-2 bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-md">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                     <div>
@@ -248,6 +401,7 @@
                         </div>
                     </div>
                     
+                    <!-- Instant Client-Side Team Filter -->
                     <input type="text" id="teamSearch" placeholder="Filter team..." 
                            class="bg-zinc-950 border border-zinc-800 text-xs px-3 py-1.5 rounded-lg text-zinc-200 focus:outline-none focus:border-cyan-500 transition w-full sm:w-40 font-mono"/>
                 </div>
@@ -754,6 +908,7 @@
                 </div>
             </div>
 
+            <!-- Top Scorers (1 Column) -->
             <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-md space-y-4">
                 <div class="flex justify-between items-center border-b border-zinc-800/80 pb-3">
                     <h2 class="text-sm font-bold font-mono uppercase tracking-wider text-zinc-200">Capocannoniere</h2>
@@ -766,124 +921,9 @@
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-3">
-                <h3 class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-sm bg-blue-500"></span> Football Italia Wire
-                </h3>
-                <div class="grid grid-cols-1 gap-2.5">
-                    
-        <a href="https://football-italia.net/newcastle-behind-leipzig-race-milan-nkunku/" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-800/40 transition">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span class="text-[11px] font-mono text-zinc-500">Sat, 22 Aug 2026</span>
-            </div>
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-cyan-400 transition leading-snug line-clamp-2">Newcastle ‘well behind’ RB Leipzig in race for Nkunku, says Milan expert</h4>
-        </a>
-    
-        <a href="https://football-italia.net/juventus-grabara-goalkeeper-vicario-digregorio/" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-800/40 transition">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span class="text-[11px] font-mono text-zinc-500">Sat, 22 Aug 2026</span>
-            </div>
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-cyan-400 transition leading-snug line-clamp-2">Juventus near Grabara deal as goalkeeping overhaul continues after Vicario and Di Gregorio deals</h4>
-        </a>
-    
-        <a href="https://football-italia.net/atalanta-elmas-move-deal-rb-leipzig/" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-800/40 transition">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span class="text-[11px] font-mono text-zinc-500">Sat, 22 Aug 2026</span>
-            </div>
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-cyan-400 transition leading-snug line-clamp-2">Official: Atalanta confirm Elmas move in surprising deal with RB Leipzig</h4>
-        </a>
-    
-        <a href="https://football-italia.net/genoa-napoli-probable-line-ups-watch-tv/" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-800/40 transition">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span class="text-[11px] font-mono text-zinc-500">Sat, 22 Aug 2026</span>
-            </div>
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-cyan-400 transition leading-snug line-clamp-2">Serie A: Genoa vs. Napoli – Probable line-ups, where to watch on TV</h4>
-        </a>
-    
-        <a href="https://football-italia.net/live-done-deal-tracker-latest-serie-a-transfer/" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-800/40 transition">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span class="text-[11px] font-mono text-zinc-500">Sat, 22 Aug 2026</span>
-            </div>
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-cyan-400 transition leading-snug line-clamp-2">LIVE Done Deals Tracker: Every confirmed transfer on August 22</h4>
-        </a>
-    
-        <a href="https://football-italia.net/football-italia-predicions-2026-27-serie-a-win/" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-800/40 transition">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span class="text-[11px] font-mono text-zinc-500">Sat, 22 Aug 2026</span>
-            </div>
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-cyan-400 transition leading-snug line-clamp-2">Football Italia writers predict the 2026-27 Serie A title, European places and relegation</h4>
-        </a>
-    
-                </div>
-            </div>
-
-            <div class="space-y-3">
-                <h3 class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-sm bg-emerald-500"></span> Transfermarkt Rumor Desk
-                </h3>
-                <div class="grid grid-cols-1 gap-2.5">
-                    
-        <a href="
-https://www.transfermarkt.co.uk/aston-villa-hold-leon-goretzka-transfer-talks-what-could-bayern-icon-bring-for-unai-emery-/view/news/485252" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-zinc-800/40 transition">
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition mb-1 leading-snug">
-Aston Villa in Leon Goretzka transfer talks: What can Bayern icon offer?
-</h4>
-            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">Aston Villa are locked in talks with former Bayern Munich midfielder Leon Goretzka about a move to Villa Park,...</p>
-        </a>
-    
-        <a href="
-https://www.transfermarkt.co.uk/10-serie-a-u21-wonderkids-to-watch-in-2026-27-inter-milan-juventus-and-roma-stars-included/view/news/485208" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-zinc-800/40 transition">
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition mb-1 leading-snug">
-10 Serie A U21 wonderkids to watch in 2026/27 -  Inter Milan, Juventus and Roma stars included
-</h4>
-            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">Serie A is back. The Italian top-flight gets underway this evening with excitement levels sky-high for another...</p>
-        </a>
-    
-        <a href="
-https://www.transfermarkt.co.uk/most-expensive-28yo-centre-back-arsenal-complete-ezri-konsa-signing-from-aston-villa/view/news/484997" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-zinc-800/40 transition">
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition mb-1 leading-snug">
-Most expensive 28yo centre-back - Arsenal complete Ezri Konsa signing from Aston Villa
-</h4>
-            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">Arsenal have completed the signing of Aston Villa Ezri Konsa. It's understood that the Gunners will pay an ini...</p>
-        </a>
-    
-        <a href="
-https://www.transfermarkt.co.uk/sunderland-record-signings-where-does-dayann-methalie-rank-after-euro-30m-deal-completed-/view/news/484742" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-zinc-800/40 transition">
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition mb-1 leading-snug">
-Sunderland record signings: Where does Dayann Méthalie rank?
-</h4>
-            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">Sunderland have clinched the signing of highly-rated defender Dayann M&eacute;thalie from Toulouse. The Premie...</p>
-        </a>
-    
-        <a href="
-https://www.transfermarkt.co.uk/can-jose-mourinho-succeed-at-real-madrid-heres-what-his-career-statistics-suggest/view/news/485139" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-zinc-800/40 transition">
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition mb-1 leading-snug">
-Can José Mourinho succeed at Real Madrid? Here's what his career statistics suggest 
-</h4>
-            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">The entire world of football stops to take note of any managerial change at Real Madrid, and the Spanish club&...</p>
-        </a>
-    
-        <a href="
-https://www.transfermarkt.co.uk/who-is-igor-tyjon-arsenal-agree-deal-for-blackburn-rovers-and-england-youth-starlet/view/news/473107" target="_blank" rel="noopener noreferrer" class="group block p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-zinc-800/40 transition">
-            <h4 class="text-sm font-semibold text-zinc-200 group-hover:text-emerald-400 transition mb-1 leading-snug">
-Arsenal agree deal for England and Blackburn wonderkid
-</h4>
-            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">Arsenal are edging closer to finalising a deal for Igor Tyjon from Blackburn Rovers. The 18-year-old is curren...</p>
-        </a>
-    
-                </div>
-            </div>
-        </div>
-
     </div>
 
+    <!-- Instant Search Script -->
     <script>
         document.getElementById('teamSearch').addEventListener('input', function(e) {
             const query = e.target.value.toLowerCase();
