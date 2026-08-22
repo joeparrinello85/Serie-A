@@ -509,7 +509,7 @@ def build_dashboard():
             }});
         }});
 
-        // 2. Client-Side Timezone Auto-Converter (Localized Kickoff Time)
+        // 2. Client-Side Timezone Auto-Converter & Status Badge Manager
         document.addEventListener('DOMContentLoaded', function() {{
             const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const tzShort = new Date().toLocaleTimeString('en-US', {{ timeZoneName: 'short' }}).split(' ')[2] || '';
@@ -520,7 +520,7 @@ def build_dashboard():
 
             document.querySelectorAll('.match-card').forEach(function(card) {{
                 const rawUtc = card.getAttribute('data-utc');
-                const status = card.getAttribute('data-status');
+                const status = (card.getAttribute('data-status') || '').toUpperCase();
                 if (!rawUtc) return;
 
                 const matchDate = new Date(rawUtc);
@@ -536,10 +536,14 @@ def build_dashboard():
                 }}
 
                 if (badgeEl) {{
-                    if (status === 'IN_PLAY') {{
+                    if (status === 'IN_PLAY' || status === 'LIVE') {{
                         badgeEl.innerHTML = '<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono uppercase text-[10px] font-bold animate-pulse">LIVE</span>';
+                    }} else if (status === 'PAUSED') {{
+                        badgeEl.innerHTML = '<span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-mono uppercase text-[10px] font-bold">HT</span>';
                     }} else if (status === 'FINISHED') {{
                         badgeEl.innerHTML = '<span class="px-2 py-0.5 rounded bg-zinc-800 font-mono uppercase text-[10px] text-zinc-400">FT</span>';
+                    }} else if (status === 'POSTPONED' || status === 'SUSPENDED' || status === 'CANCELLED') {{
+                        badgeEl.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-mono uppercase text-[10px] font-bold">${{status.slice(0, 4)}}</span>`;
                     }} else {{
                         badgeEl.innerHTML = `<span class="px-2 py-0.5 rounded bg-blue-500/10 text-cyan-400 font-mono text-[10px] font-semibold">${{timeStr}}</span>`;
                     }}
