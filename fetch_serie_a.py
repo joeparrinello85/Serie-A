@@ -365,22 +365,36 @@ def build_dashboard():
     html = f"""<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Calcio Intelligence | Serie A Hub</title>
+
+    <!-- Social Preview / Open Graph Tags -->
+    <meta property="og:title" content="Calcio Intelligence | Serie A Hub" />
+    <meta property="og:description" content="Live standings, matchday fixtures, top scorers, and CBS Sports Golazo highlights." />
+    <meta property="og:type" content="website" />
+    <!-- Replace with your own hosted banner image or a generic Serie A logo URL -->
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2019.svg/1200px-Serie_A_logo_2019.svg.png" />
+
+    <!-- Twitter / X Preview Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Calcio Intelligence | Serie A Hub" />
+    <meta name="twitter:description" content="Live standings, matchday fixtures, top scorers, and CBS Sports Golazo highlights." />
+    <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2019.svg/1200px-Serie_A_logo_2019.svg.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {{ font-family: 'Plus Jakarta Sans', sans-serif; }}
-        .font-mono {{ font-family: 'JetBrains Mono', monospace; }}
-        .ticker-track {{
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .ticker-track {
             display: inline-flex;
             width: max-content;
             will-change: transform;
-        }}
+        }
     </style>
 </head>
 <body class="bg-[#090a0f] text-zinc-100 min-h-screen antialiased selection:bg-cyan-500 selection:text-black">
