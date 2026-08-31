@@ -388,13 +388,13 @@ def build_dashboard():
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .ticker-track {
+        body {{ font-family: 'Plus Jakarta Sans', sans-serif; }}
+        .font-mono {{ font-family: 'JetBrains Mono', monospace; }}
+        .ticker-track {{
             display: inline-flex;
             width: max-content;
             will-change: transform;
-        }
+        }}
     </style>
 </head>
 <body class="bg-[#090a0f] text-zinc-100 min-h-screen antialiased selection:bg-cyan-500 selection:text-black">
