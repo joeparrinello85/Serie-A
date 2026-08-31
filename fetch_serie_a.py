@@ -4,11 +4,12 @@ import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
 import html as html_lib
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 API_TOKEN = os.environ.get("FOOTBALL_DATA_TOKEN", "fccf5ef3d21742fd923129a7165304da")
 BASE_URL = "https://api.football-data.org/v4"
 COMPETITION = "SA"
+RETENTION_HOURS = 36  # Keep completed matchday scores visible for 36 hours
 
 
 def fetch_api(endpoint: str) -> dict:
@@ -54,7 +55,6 @@ def fetch_news() -> list:
 
 def fetch_youtube_highlights() -> list:
     """Fetches strictly the top 2 newest Serie A match highlights from CBS Sports Golazo."""
-    # CBS Sports Golazo Channel ID: UCET00YnetHT7tOpu12v8jxg
     channel_url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCET00YnetHT7tOpu12v8jxg"
     videos = []
     
@@ -202,21 +202,45 @@ def build_dashboard():
         </tr>
         """)
 
-   # 2. Match Center: Show full current/relevant matchday slate (Finished + Live + Upcoming)
+    # 2. Match Center: Show full current/relevant matchday slate with retention buffer
     matches = matches_data.get("matches", [])
+    now_dt = datetime.now(timezone.utc)
     
-    # 1. Determine current matchday number from API data
-    current_matchday = None
-    for m in matches:
-        if m.get("status") in ("IN_PLAY", "PAUSED", "TIMED", "SCHEDULED"):
-            current_matchday = m.get("matchday")
-            break
-            
-    # Fallback to the latest matchday if all matches are finished
-    if not current_matchday and matches:
-        current_matchday = matches[-1].get("matchday")
+    # Check for matches currently live or paused
+    live_matchdays = {m.get("matchday") for m in matches if m.get("status") in ("IN_PLAY", "PAUSED")}
+    
+    if live_matchdays:
+        current_matchday = min(live_matchdays)
+    else:
+        # Check the last finished matchday and see if it's within the retention window
+        finished_matches = [m for m in matches if m.get("status") == "FINISHED" and m.get("utcDate")]
+        last_finished_matchday = finished_matches[-1].get("matchday") if finished_matches else None
+        
+        keep_last_finished = False
+        if last_finished_matchday:
+            last_round_matches = [m for m in finished_matches if m.get("matchday") == last_finished_matchday]
+            try:
+                # Find the kickoff timestamp of the final match in that round
+                last_game_date_str = max(m.get("utcDate") for m in last_round_matches)
+                last_game_dt = datetime.fromisoformat(last_game_date_str.replace("Z", "+00:00"))
+                
+                # If within RETENTION_HOURS of the final game, keep showing the finished matchday
+                if now_dt - last_game_dt < timedelta(hours=RETENTION_HOURS):
+                    keep_last_finished = True
+            except Exception as e:
+                print(f"Date parse error: {e}")
 
-    # 2. Filter matches for the active matchday
+        if keep_last_finished:
+            current_matchday = last_finished_matchday
+        else:
+            # Fall back to next upcoming scheduled matchday
+            upcoming_matchdays = [
+                m.get("matchday") for m in matches 
+                if m.get("status") in ("TIMED", "SCHEDULED") and m.get("matchday") is not None
+            ]
+            current_matchday = upcoming_matchdays[0] if upcoming_matchdays else (last_finished_matchday or 1)
+
+    # Filter matches for the active matchday
     if current_matchday:
         active_matches = [m for m in matches if m.get("matchday") == current_matchday]
     else:
@@ -260,7 +284,7 @@ def build_dashboard():
         </div>
         """)
 
-   # 3. Highlights Cards (CBS Sports Golazo)
+    # 3. Highlights Cards (CBS Sports Golazo)
     highlight_cards = []
     for v in highlight_videos:
         highlight_cards.append(f"""
@@ -336,15 +360,14 @@ def build_dashboard():
 
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
+    matchday_header = f"Match Center (Round {current_matchday})" if current_matchday else "Match Center"
+
     html = f"""<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Calcio Intelligence | Serie A Hub</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcio Intelligence | Serie A Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -409,7 +432,7 @@ def build_dashboard():
         <section class="space-y-3">
             <div class="flex justify-between items-center">
                 <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-zinc-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-sm bg-cyan-400"></span> Match Center
+                    <span class="w-2 h-2 rounded-sm bg-cyan-400"></span> {matchday_header}
                 </h2>
                 <span id="userTimezoneLabel" class="text-[11px] font-mono text-zinc-500">Local Kickoffs</span>
             </div>
@@ -539,6 +562,7 @@ def build_dashboard():
                 }}
             }});
         }});
+
         // Continuous, tab-resilient JS Marquee Engine
         (function() {{
             const track = document.querySelector('.ticker-track');
@@ -547,7 +571,7 @@ def build_dashboard():
 
             let pos = 0;
             let isHovered = false;
-            const speed = 0.65; // Adjust speed: lower is slower, higher is faster
+            const speed = 0.65;
 
             container.addEventListener('mouseenter', function() {{ isHovered = true; }});
             container.addEventListener('mouseleave', function() {{ isHovered = false; }});
@@ -555,7 +579,6 @@ def build_dashboard():
             function step() {{
                 if (!isHovered) {{
                     pos -= speed;
-                    // Reset seamlessly at the exact halfway mark (second duplicate copy begins)
                     const halfWidth = track.scrollWidth / 2;
                     if (Math.abs(pos) >= halfWidth) {{
                         pos = 0;
